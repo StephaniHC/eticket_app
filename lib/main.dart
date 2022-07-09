@@ -1,6 +1,5 @@
-import 'package:eticket_app/provider/ui_provider.dart';
-import 'package:eticket_app/routes/app_routes.dart';
-import 'package:eticket_app/screens/eventos_screen.dart';
+import 'package:eticket_app/provider/ui_provider.dart'; 
+import 'package:eticket_app/screens/lista_eventos.dart';
 import 'package:eticket_app/screens/login_screen.dart';
 import 'package:eticket_app/screens/qr_scanner.dart'; 
 import 'package:flutter/material.dart';
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
         initialRoute: 'login',
         routes: {
           'login': ( BuildContext context ) => LoginScreen(),
-          'eventos': ( BuildContext context  ) => EventosScreen(),
+          'eventos': ( BuildContext context  ) => ListaEventos(),
           'qr': ( BuildContext context  ) => QrScannerScreen(),
         }, 
         theme: ThemeData.light().copyWith(

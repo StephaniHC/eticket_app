@@ -2,9 +2,7 @@ import 'package:eticket_app/provider/login_form_provider.dart';
 import 'package:eticket_app/ui/input_decorations.dart';
 import 'package:eticket_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../provider/login_form_provider.dart';
+import 'package:provider/provider.dart'; 
 
 class LoginScreen extends StatelessWidget { 
 

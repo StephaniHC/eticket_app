@@ -1,10 +1,8 @@
-import 'package:eticket_app/screens/eventos_screen.dart';
+import 'package:eticket_app/screens/lista_eventos.dart'; 
 import 'package:eticket_app/screens/tickets_screen.dart';
 import 'package:eticket_app/widgets/custom_navigatorbar.dart';
 import 'package:eticket_app/widgets/scan_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/ui_provider.dart';
@@ -39,7 +37,7 @@ class _QrScannerBody extends StatelessWidget {
         return TicketScreen();
 
       case 1:  
-        return EventosScreen();
+       return const ListaEventos();
 
       default:
         return TicketScreen();
