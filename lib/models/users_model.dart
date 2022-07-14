@@ -12,18 +12,21 @@ class Users {
     Users({
         required this.id,
         required this.rol,
+        required this.name,
         required this.email,
         required this.password,
     });
 
     int id;
     int rol;
+    String name;
     String email;
     String password;
 
     factory Users.fromJson(Map<String, dynamic> json) => Users(
         id: json["id"],
         rol: json["rol"],
+        name: json["name"],
         email: json["email"],
         password: json["password"],
     );
@@ -31,6 +34,7 @@ class Users {
     Map<String, dynamic> toJson() => {
         "id": id,
         "rol": rol,
+        "name": name,
         "email": email,
         "password": password,
     };

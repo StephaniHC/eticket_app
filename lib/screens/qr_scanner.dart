@@ -37,7 +37,7 @@ class _QrScannerBody extends StatelessWidget {
         return TicketScreen();
 
       case 1:  
-       return const ListaEventos();
+       //return const ListaEventos();
 
       default:
         return TicketScreen();
