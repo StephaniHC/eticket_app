@@ -3,11 +3,10 @@ import 'dart:convert';
 import 'package:eticket_app/global/environment.dart';
 import 'package:eticket_app/models/login_response.dart';
 import 'package:eticket_app/models/users_model.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:http/http.dart' as http;
-
 
 class AuthService extends ChangeNotifier {
   late Users users;
@@ -19,27 +18,29 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-Future<String?> login( String email, String password ) async {
-  print("llegamo");
+  Future<String?> login(String email, String password) async {
+    print("llegamo");
     final Map<String, dynamic> authData = {
       'email': email,
       'password': password,
-      'returnSecureToken': true
+      // 'returnSecureToken': true
     };
     print(authData);
 
-    final resp = await http.post(Uri.parse('${Environment.apiUrl}/login-api'), body: json.encode(authData));
-    final Map<String, dynamic> decodedResp = json.decode( resp.body );
+    final resp = await http.post(
+        Uri.parse('${Environment.apiUrl}/login-api'),
+        body: authData);
+    final Map<String, dynamic> decodedResp = json.decode(resp.body);
     print("paso?");
-    if ( decodedResp.containsKey('idToken') ) {
-        // Token hay que guardarlo en un lugar seguro
-        // decodedResp['idToken'];
-        await _storage.write(key: 'token', value: decodedResp['idToken']);
-        return null;
+    print(decodedResp);
+    if (decodedResp.containsKey('token')) {
+      // Token hay que guardarlo en un lugar seguro
+      // decodedResp['idToken'];
+      await _storage.write(key: 'token', value: decodedResp['idToken']);
+      return null;
     } else {
       return decodedResp['error']['message'];
     }
-
   }
 /*Future<bool> login(String email, String password) async {
     this.autenticando = true;
@@ -61,20 +62,15 @@ Future<String?> login( String email, String password ) async {
     }
   }*/
 
-
   Future _guardarToken(String token) async {
     return await _storage.write(key: 'token', value: token);
   }
- 
 
   Future logout() async {
     await _storage.delete(key: 'token');
   }
 
- Future<String> readToken() async {
-
+  Future<String> readToken() async {
     return await _storage.read(key: 'token') ?? '';
-
   }
-
 }
