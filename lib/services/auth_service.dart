@@ -19,14 +19,34 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
+Future<String?> login( String email, String password ) async {
+  print("llegamo");
+    final Map<String, dynamic> authData = {
+      'email': email,
+      'password': password,
+      'returnSecureToken': true
+    };
+    print(authData);
 
-Future<bool> login(String email, String password) async {
-  print("nos fuimoooos");
+    final resp = await http.post(Uri.parse('${Environment.apiUrl}/login-api'), body: json.encode(authData));
+    final Map<String, dynamic> decodedResp = json.decode( resp.body );
+    print("paso?");
+    if ( decodedResp.containsKey('idToken') ) {
+        // Token hay que guardarlo en un lugar seguro
+        // decodedResp['idToken'];
+        await _storage.write(key: 'token', value: decodedResp['idToken']);
+        return null;
+    } else {
+      return decodedResp['error']['message'];
+    }
+
+  }
+/*Future<bool> login(String email, String password) async {
     this.autenticando = true;
     final data = {'email': email, 'password': password};
-
+    print(data);
     final resp = await http.post(Uri.parse('${Environment.apiUrl}/login-api'),
-        body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
+        body: json.encode(data));
     print('aquuuui');
     print(resp.body);
     this.autenticando = false;
@@ -39,7 +59,9 @@ Future<bool> login(String email, String password) async {
     } else {
       return false;
     }
-  }
+  }*/
+
+
   Future _guardarToken(String token) async {
     return await _storage.write(key: 'token', value: token);
   }
