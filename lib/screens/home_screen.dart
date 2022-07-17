@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:eticket_app/models/evento_model.dart';
 import 'package:eticket_app/models/users_model.dart';
 import 'package:eticket_app/screens/evento_screen.dart';
@@ -26,6 +24,7 @@ class HomeScreen extends StatefulWidget {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context, listen: false); 
+   // final eventoService = Provider.of<EventoService>(context, listen: false); 
     //final users = authService.users;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -83,6 +82,14 @@ class HomeScreen extends StatefulWidget {
             ),
             ListTile(
               leading: const Icon(Icons.logout),
+              title: Text('Prueba'),
+              onTap: () {  
+                eventoService.getEventos(3);
+                print("salio");
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
               title: Text('Salir'),
               onTap: () {  
                 authService.logout();
@@ -129,12 +136,6 @@ class HomeScreen extends StatefulWidget {
     );
   }
 
-  int randon(int a, int b) {
-    Random rnd = Random();
-    int r = a + rnd.nextInt(b - a);
-    return r;
-  }
-
   Widget titulo(String nombre) {
     return Padding(
         padding: const EdgeInsets.only(top: 5, bottom: 5),
@@ -144,13 +145,13 @@ class HomeScreen extends StatefulWidget {
   }
 
   void _cargarEventos() async {
-    listaEvento = await eventoService.getEventos();
+    listaEvento = await eventoService.getEventos(3);
     setState(() {}); 
     _refreshController.refreshCompleted();
   }
 
   Future<List<Evento>> _getEventos() async {
-    listaEvento = await eventoService.getEventos();
+    listaEvento = await eventoService.getEventos(3);
     return listaEvento;
   }
 }

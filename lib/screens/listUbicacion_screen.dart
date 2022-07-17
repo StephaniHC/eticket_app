@@ -1,10 +1,9 @@
-import 'package:eticket_app/screens/qr_scanner.dart';
+import 'package:eticket_app/models/ubicacion_model.dart';
 import 'package:flutter/material.dart';
-import 'package:eticket_app/models/evento_model.dart';
 
-class EventoScreen extends StatelessWidget {
-  final Evento evento;
-  const EventoScreen({Key? key, required this.evento})
+class ListUbicacionScreen extends StatelessWidget {
+  final Ubicacion ubicacion;
+  const ListUbicacionScreen({Key? key, required this.ubicacion})
       : super(key: key);
 
   @override
@@ -21,11 +20,11 @@ class EventoScreen extends StatelessWidget {
         ),
         child: Column(
           children: [
-            title(evento.titulo),
+            title(ubicacion.nombre),
             listaDatos(
-                evento.titulo,
-                evento.descripcion,
-                evento.estado
+                ubicacion.nombre,
+                ubicacion.direccion,
+                ubicacion.telefono
                 ),
             /*ElevatedButton(
                 onPressed: () {
@@ -68,14 +67,14 @@ class EventoScreen extends StatelessWidget {
             ));
   }
 
-  Widget listaDatos(String titulo, String descripcion, String estado) {
+  Widget listaDatos(String nombre, String direccion, String telefono) {
     return Row(
       children: [
-        propiedades("Titulo: ", titulo),
+        propiedades("Nombre: ", nombre),
         Container(width: 10),
-        propiedades("Descripcion: ", descripcion),
+        propiedades("Direccion: ", direccion),
         Container(width: 10),
-        propiedades("Estado: ", estado),
+        propiedades("Telefono: ", telefono),
       ],
     );
   }
