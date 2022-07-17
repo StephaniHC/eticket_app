@@ -1,12 +1,13 @@
 import 'dart:math';
 
 import 'package:eticket_app/models/evento_model.dart';
+import 'package:eticket_app/models/users_model.dart';
 import 'package:eticket_app/screens/evento_screen.dart';
 import 'package:eticket_app/services/auth_service.dart';
 import 'package:eticket_app/services/evento_service.dart';
+import 'package:eticket_app/widgets/scan_button.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart'; 
-import 'package:eticket_app/models/users_model.dart';
+import 'package:provider/provider.dart';   
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeScreen extends StatefulWidget { 
@@ -22,12 +23,10 @@ class HomeScreen extends StatefulWidget {
     RefreshController(initialRefresh: false);
     List<Evento> listaEvento = [];
 
-
   @override
   Widget build(BuildContext context) {
-    //final denunciaService = Provider.of<DenunciaService>(context, listen: false);
-    final authService = Provider.of<AuthService>(context, listen: false);
-    //print(authService.users.name);
+    final authService = Provider.of<AuthService>(context, listen: false); 
+    //final users = authService.users;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -52,7 +51,7 @@ class HomeScreen extends StatefulWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      'cscds',
+                      'name dsdsd ',
                       style: TextStyle(color: Colors.white, fontSize: 20.0),
                     ),
                   ),
@@ -79,7 +78,7 @@ class HomeScreen extends StatefulWidget {
               leading: const Icon(Icons.qr_code),
               title: Text('Lector QR'),
               onTap: () { 
-                Navigator.pop(context);
+                Navigator.pushReplacementNamed(context, 'qr');
               },
             ),
             ListTile(

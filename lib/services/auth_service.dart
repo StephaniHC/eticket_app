@@ -30,6 +30,7 @@ class AuthService extends ChangeNotifier {
     print(decodedResp);
     if (decodedResp.containsKey('token')) { 
       //final loginResponse = loginResponseFromJson(resp.body);
+     // this.users = loginResponse.users;
       print("veremos q");
       await _storage.write(key: 'token', value: decodedResp['idToken']);
       return null;

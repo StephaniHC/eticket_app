@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:provider/provider.dart';
 
 class ScanButton extends StatelessWidget { 
 
@@ -15,8 +14,6 @@ class ScanButton extends StatelessWidget {
         if ( barcodeScanRes == '-1' ) {
           return;
         } 
-        //se viene lo chido xD
-        
       }
     );
   }
