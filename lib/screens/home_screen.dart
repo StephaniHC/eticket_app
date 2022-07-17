@@ -1,13 +1,157 @@
-import 'package:flutter/material.dart';
+import 'dart:math';
 
-class HomeScreen extends StatelessWidget { 
+import 'package:eticket_app/models/evento_model.dart';
+import 'package:eticket_app/screens/evento_screen.dart';
+import 'package:eticket_app/services/auth_service.dart';
+import 'package:eticket_app/services/evento_service.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; 
+import 'package:eticket_app/models/users_model.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+class HomeScreen extends StatefulWidget { 
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+  class _HomeScreenState extends State<HomeScreen> {
+    final eventoService = EventoService();
+    final RefreshController _refreshController =
+    RefreshController(initialRefresh: false);
+    List<Evento> listaEvento = [];
+
 
   @override
   Widget build(BuildContext context) {
+    //final denunciaService = Provider.of<DenunciaService>(context, listen: false);
+    final authService = Provider.of<AuthService>(context, listen: false);
+    //print(authService.users.name);
     return Scaffold(
-      body: Center (
-        child: Text('HomeScreen'),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text("Eventos Disponibles"),
       ),
+      drawer: Drawer(
+        child: ListView( 
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Stack(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage('https://static.vecteezy.com/system/resources/previews/007/319/933/non_2x/black-avatar-person-icons-user-profile-icon-vector.jpg'),
+                      radius: 50.0,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      'cscds',
+                      style: TextStyle(color: Colors.white, fontSize: 20.0),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight + Alignment(0, .3),
+                    child: Text(
+                      'Personal de Eventos',
+                      style: TextStyle(
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ),  
+                ],        
+              ), 
+            ),
+            ListTile(
+              leading: const Icon(Icons.list_alt_outlined),
+              title: Text('Eventos'),
+              onTap: () { 
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.qr_code),
+              title: Text('Lector QR'),
+              onTap: () { 
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: Text('Salir'),
+              onTap: () {  
+                authService.logout();
+                Navigator.pushReplacementNamed(context, 'login');
+              },
+            ),
+          ],
+        ),
+      ),
+      body: FutureBuilder(
+        future: _getEventos(),
+        builder: (context, AsyncSnapshot<List<Evento>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return _listViewEventos();
+          }
+        },
+      )
     );
   }
-} 
+ Widget _listViewEventos() {
+    return SmartRefresher(
+      
+      controller: _refreshController,
+      enablePullDown: true,
+      onRefresh: _cargarEventos,
+      header: WaterDropHeader(
+        complete: Icon(Icons.check, color: Colors.indigoAccent.shade100),
+        waterDropColor: Colors.indigoAccent.shade100,
+      ),
+      
+      child: listaEvento.isEmpty
+          ? Center(child: titulo("Sin Eventos!"))
+          : ListView.separated(
+              itemBuilder: (_, i) => EventoScreen(
+                evento: listaEvento[i], 
+              ),
+              
+              separatorBuilder: (_, i) => const Divider(),
+              itemCount: listaEvento.length,
+            ),
+            
+    );
+  }
+
+  int randon(int a, int b) {
+    Random rnd = Random();
+    int r = a + rnd.nextInt(b - a);
+    return r;
+  }
+
+  Widget titulo(String nombre) {
+    return Padding(
+        padding: const EdgeInsets.only(top: 5, bottom: 5),
+        child: Text(nombre,
+            textAlign: TextAlign.start,
+            style: const TextStyle(fontSize: 30.0, color: Colors.black54)));
+  }
+
+  void _cargarEventos() async {
+    listaEvento = await eventoService.getEventos();
+    setState(() {}); 
+    _refreshController.refreshCompleted();
+  }
+
+  Future<List<Evento>> _getEventos() async {
+    listaEvento = await eventoService.getEventos();
+    return listaEvento;
+  }
+}

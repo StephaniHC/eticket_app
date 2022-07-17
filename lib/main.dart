@@ -1,4 +1,5 @@
 import 'package:eticket_app/provider/ui_provider.dart';
+import 'package:eticket_app/screens/evento_screen.dart';
 import 'package:eticket_app/screens/home_screen.dart'; 
 import 'package:eticket_app/screens/lista_eventos.dart';
 import 'package:eticket_app/screens/login_screen.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
           'login': ( BuildContext context ) => LoginScreen(),
           'home': ( BuildContext context  ) => HomeScreen(),
           'qr': ( BuildContext context  ) => QrScannerScreen(),
+          //'evento': ( BuildContext context  ) => EventoScreen(evento: '3'),
         }, 
         theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: Colors.grey[300],

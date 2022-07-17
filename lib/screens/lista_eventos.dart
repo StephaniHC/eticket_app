@@ -1,5 +1,5 @@
 import 'dart:math';
-/*import 'package:eticket_app/screens/evento_screen.dart';
+import 'package:eticket_app/screens/evento_screen.dart';
 import 'package:flutter/material.dart'; 
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -89,4 +89,4 @@ class _ListaEventosState extends State<ListaEventos> {
     listaEvento = await eventoService.getEventos();
     return listaEvento;
   }
-}*/
+}

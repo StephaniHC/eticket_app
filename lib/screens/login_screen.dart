@@ -103,29 +103,7 @@ class _LoginForm extends StatelessWidget {
               ),
               onPressed: loginForm.isLoading ? null : () async { 
                 FocusScope.of(context).unfocus();
-                print("entramos al prese");
                 if( !loginForm.isValidForm() ) return;
-                /*loginForm.isLoading = true;
-                final authService = Provider.of<AuthService>(context, listen: false);
-                print("okkkkkkkkk");
-                final loginOk = await authService.login(loginForm.email, loginForm.password);
-                print("entramos? veremoooos");
-                print(loginOk);
-                if (loginOk) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return HomeScreen();
-                      },
-                    ),
-                  );
-                } else {
-                  
-                print("efffeeeeee");
-                  mostrarAlerta(context, 'Login incorrecto', 'Revise sus Datos');
-                }
-              }*/
                FocusScope.of(context).unfocus();
                 final authService = Provider.of<AuthService>(context, listen: false);    
                 if( !loginForm.isValidForm() ) return;
@@ -134,9 +112,7 @@ class _LoginForm extends StatelessWidget {
                 if ( errorMessage == null ) {
                   Navigator.pushReplacementNamed(context, 'home');
                 } else {
-                  // TODO: mostrar error en pantalla
-                  // print( errorMessage );
-                  NotificationsService.showSnackbar(errorMessage);
+                  mostrarAlerta(context, 'Login incorrecto', 'Revise sus Datos'); 
                   loginForm.isLoading = false;
                 }}
             )
