@@ -1,7 +1,6 @@
 import 'package:eticket_app/provider/login_form_provider.dart';
 import 'package:eticket_app/services/auth_service.dart';
 import 'package:eticket_app/ui/input_decorations.dart';
-import 'package:eticket_app/widgets/mostrar_alerta.dart';
 import 'package:eticket_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart'; 
@@ -110,7 +109,7 @@ class _LoginForm extends StatelessWidget {
                 if ( errorMessage == null ) {
                   Navigator.pushReplacementNamed(context, 'home');
                 } else {
-                  mostrarAlerta(context, 'Login incorrecto', 'Revise sus Datos'); 
+                  mostrarAlerta(context, 'Login incorrecto', errorMessage); 
                   loginForm.isLoading = false;
                 }}
             )

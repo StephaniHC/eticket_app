@@ -1,4 +1,5 @@
 import 'package:eticket_app/models/ubicacion_model.dart';
+import 'package:eticket_app/screens/screens.dart';
 import 'package:flutter/material.dart';
 
 class ListUbicacionScreen extends StatelessWidget {
@@ -26,14 +27,14 @@ class ListUbicacionScreen extends StatelessWidget {
                 ubicacion.direccion,
                 ubicacion.telefono
                 ),
-            /*ElevatedButton(
+            ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => QrScannerScreen()),
                   );
                 },
-                child: Text('QR Scanner'))*/
+                child: Text('QR Scanner'))
           ],
         ),
       ),

@@ -1,10 +1,10 @@
-import 'package:eticket_app/provider/ui_provider.dart';
-import 'package:eticket_app/screens/evento_screen.dart';
+
 import 'package:eticket_app/screens/home_screen.dart'; 
 import 'package:eticket_app/screens/login_screen.dart';
 import 'package:eticket_app/screens/qr_scanner.dart';
 import 'package:eticket_app/screens/ubicacion_screen.dart';
 import 'package:eticket_app/services/auth_service.dart';
+import 'package:eticket_app/services/ubicacion_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       providers: [
         //ChangeNotifierProvider(create: (_) => new UiProvider() ),
         ChangeNotifierProvider(create: ( _ ) => AuthService() ),
+        ChangeNotifierProvider(create: (context) => UbicacionService() ),
       ],
 
       child: MaterialApp(
