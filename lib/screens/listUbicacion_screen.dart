@@ -1,5 +1,8 @@
 import 'package:eticket_app/models/ubicacion_model.dart';
+import 'package:eticket_app/screens/screens.dart';
+import 'package:eticket_app/services/services.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ListUbicacionScreen extends StatelessWidget {
   final Ubicacion ubicacion;
@@ -8,9 +11,12 @@ class ListUbicacionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ubicacionService =
+        Provider.of<UbicacionService>(context, listen: false);
+    ubicacionService.ubicacionSelect = ubicacion;    
     return Card(
       elevation: 10,
-      color: Colors.blueAccent,
+      color: Color.fromARGB(255, 143, 219, 238),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Container(
         margin: const EdgeInsets.all(8),
@@ -22,18 +28,15 @@ class ListUbicacionScreen extends StatelessWidget {
           children: [
             title(ubicacion.nombre),
             listaDatos(
-                ubicacion.nombre,
-                ubicacion.direccion,
-                ubicacion.telefono
-                ),
-            /*ElevatedButton(
-                onPressed: () {
+                ubicacion.nombre, ubicacion.direccion, ubicacion.telefono),
+            ElevatedButton(
+                onPressed: () {                  
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => QrScannerScreen()),
                   );
                 },
-                child: Text('QR Scanner'))*/
+                child: Text('QR Scanner'))
           ],
         ),
       ),
@@ -52,8 +55,7 @@ class ListUbicacionScreen extends StatelessWidget {
                     style: const TextStyle(
                         fontSize: 20.0,
                         color: Colors.black45,
-                        fontWeight: FontWeight.bold)
-                    ),
+                        fontWeight: FontWeight.bold)),
                 Expanded(child: Container()),
               ],
             )));
@@ -62,9 +64,7 @@ class ListUbicacionScreen extends StatelessWidget {
   Widget propiedades(String name, String dato) {
     return Padding(
         padding: const EdgeInsets.only(top: 5, bottom: 5),
-        child: Align(
-            alignment: Alignment.topLeft
-            ));
+        child: Align(alignment: Alignment.topLeft));
   }
 
   Widget listaDatos(String nombre, String direccion, String telefono) {

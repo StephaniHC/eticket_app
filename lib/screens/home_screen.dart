@@ -1,9 +1,7 @@
 import 'package:eticket_app/models/evento_model.dart';
-import 'package:eticket_app/models/user_model.dart';
 import 'package:eticket_app/screens/evento_screen.dart';
 import 'package:eticket_app/services/auth_service.dart';
 import 'package:eticket_app/services/evento_service.dart';
-import 'package:eticket_app/widgets/scan_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';   
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -97,13 +95,13 @@ class HomeScreen extends StatefulWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            return _listViewEventos();
+            return _listViewEventos(user.id);
           }
         },
       )
     );
   }
- Widget _listViewEventos() {
+ Widget _listViewEventos(int user_id) {
     return SmartRefresher(
       
       controller: _refreshController,
@@ -111,18 +109,18 @@ class HomeScreen extends StatefulWidget {
       onRefresh: _cargarEventos,
       header: WaterDropHeader(
         complete: Icon(Icons.check, color: Colors.indigoAccent.shade100),
-        waterDropColor: Colors.indigoAccent.shade100,
+        waterDropColor: Color.fromARGB(255, 153, 163, 218),
       ),
       
       child: listaEvento.isEmpty
           ? Center(child: titulo("Sin Eventos!"))
           : ListView.separated(
+              itemCount: listaEvento.length,
+              separatorBuilder: (_, i) => const Divider(),
               itemBuilder: (_, i) => EventoScreen(
                 evento: listaEvento[i], 
               ),
               
-              separatorBuilder: (_, i) => const Divider(),
-              itemCount: listaEvento.length,
             ),
             
     );
@@ -137,6 +135,7 @@ class HomeScreen extends StatefulWidget {
   }
 
   void _cargarEventos() async {
+    
     listaEvento = await eventoService.getEventos(3);
     setState(() {}); 
     _refreshController.refreshCompleted();

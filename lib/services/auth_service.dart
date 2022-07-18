@@ -26,15 +26,13 @@ class AuthService extends ChangeNotifier {
     final resp = await http.post(Uri.parse('${Environment.apiUrl}/login-api'),
         body: authData);
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    print(decodedResp);
     if (decodedResp.containsKey('token')) {  
-      print(resp.body);
      final loginResponse = loginResponseFromJson(resp.body);
      this.user= loginResponse.user;
       await _storage.write(key: 'token', value: decodedResp['idToken']);
       return null;
     } else {
-      return 'error';
+      return decodedResp['message'];
     }
   } 
 

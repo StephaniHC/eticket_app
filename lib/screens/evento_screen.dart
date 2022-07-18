@@ -1,17 +1,22 @@
-import 'package:eticket_app/screens/qr_scanner.dart';
+import 'package:eticket_app/screens/screens.dart';
+import 'package:eticket_app/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:eticket_app/models/evento_model.dart';
+import 'package:provider/provider.dart';
 
 class EventoScreen extends StatelessWidget {
   final Evento evento;
-  const EventoScreen({Key? key, required this.evento})
-      : super(key: key);
+
+  const EventoScreen({Key? key, required this.evento}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final ubicacionService =
+        Provider.of<UbicacionService>(context, listen: false);
+
     return Card(
       elevation: 10,
-      color: Colors.blueAccent,
+      color: Color.fromARGB(255, 143, 219, 238),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Container(
         margin: const EdgeInsets.all(8),
@@ -21,20 +26,18 @@ class EventoScreen extends StatelessWidget {
         ),
         child: Column(
           children: [
+            listaDatos(evento.titulo, evento.descripcion, evento.estado),
             title(evento.titulo),
-            listaDatos(
-                evento.titulo,
-                evento.descripcion,
-                evento.estado
-                ),
-            // ElevatedButton(
-            //     onPressed: () {
-            //       Navigator.push(
-            //         context,
-            //         MaterialPageRoute(builder: (context) => QrScannerScreen()),
-            //       );
-            //     },
-            //     child: Text('QR Scanner'))
+            ElevatedButton(
+              onPressed: () {
+                ubicacionService.evento = this.evento;
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UbicacionScreen()),
+                );
+              },
+              child: Text('Ver Ubicaciones'),
+            )
           ],
         ),
       ),
@@ -53,8 +56,7 @@ class EventoScreen extends StatelessWidget {
                     style: const TextStyle(
                         fontSize: 20.0,
                         color: Colors.black45,
-                        fontWeight: FontWeight.bold)
-                    ),
+                        fontWeight: FontWeight.bold)),
                 Expanded(child: Container()),
               ],
             )));
@@ -63,9 +65,7 @@ class EventoScreen extends StatelessWidget {
   Widget propiedades(String name, String dato) {
     return Padding(
         padding: const EdgeInsets.only(top: 5, bottom: 5),
-        child: Align(
-            alignment: Alignment.topLeft
-            ));
+        child: Align(alignment: Alignment.topLeft));
   }
 
   Widget listaDatos(String titulo, String descripcion, String estado) {
