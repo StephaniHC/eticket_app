@@ -7,6 +7,7 @@ import 'dart:convert' as convert;
 class UbicacionService extends ChangeNotifier {
   late Evento evento;
   late DataUbicacion data;
+  late Ubicacion ubicacionSelect;
   Future<List<Ubicacion>> getUbicacion() async {
     List<Ubicacion> listaUbicacion = [];
     final req = await http.get(Uri.parse(
