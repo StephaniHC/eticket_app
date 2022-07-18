@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:eticket_app/global/environment.dart';
 import 'package:eticket_app/models/login_response.dart'; 
-import 'package:eticket_app/models/users_model.dart';
+import 'package:eticket_app/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'; 
 import 'package:http/http.dart' as http;
 
 class AuthService extends ChangeNotifier {
-  Users? users;
+  late User user;
   final _storage = new FlutterSecureStorage();
   
   bool _autenticando = false;
@@ -28,8 +28,9 @@ class AuthService extends ChangeNotifier {
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
     print(decodedResp);
     if (decodedResp.containsKey('token')) {  
-      final loginResponse = loginResponseFromJson(resp.body);
-      this.users != loginResponse.users;
+      print(resp.body);
+     final loginResponse = loginResponseFromJson(resp.body);
+     this.user= loginResponse.user;
       await _storage.write(key: 'token', value: decodedResp['idToken']);
       return null;
     } else {

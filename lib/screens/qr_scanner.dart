@@ -12,7 +12,7 @@ class QrScannerScreen extends StatelessWidget {
           IconButton(
             icon: Icon( Icons.arrow_back), 
             onPressed: (){ 
-              Navigator.pushReplacementNamed(context, 'home');
+              Navigator.pushReplacementNamed(context, 'ubicacion');
             }
           )
         ],

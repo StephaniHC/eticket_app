@@ -1,5 +1,5 @@
 import 'package:eticket_app/models/evento_model.dart';
-import 'package:eticket_app/models/users_model.dart';
+import 'package:eticket_app/models/user_model.dart';
 import 'package:eticket_app/screens/evento_screen.dart';
 import 'package:eticket_app/services/auth_service.dart';
 import 'package:eticket_app/services/evento_service.dart';
@@ -25,7 +25,7 @@ class HomeScreen extends StatefulWidget {
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context, listen: false); 
    // final eventoService = Provider.of<EventoService>(context, listen: false); 
-    //final users = authService.users;
+    final user = authService.user;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -44,18 +44,18 @@ class HomeScreen extends StatefulWidget {
                     alignment: Alignment.centerLeft,
                     child: CircleAvatar(
                       backgroundImage: NetworkImage('https://static.vecteezy.com/system/resources/previews/007/319/933/non_2x/black-avatar-person-icons-user-profile-icon-vector.jpg'),
-                      radius: 50.0,
+                      radius: 40.0,
                     ),
                   ),
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      'name dsdsd ',
+                      user.name,
                       style: TextStyle(color: Colors.white, fontSize: 20.0),
                     ),
-                  ),
+                  ), 
                   Align(
-                    alignment: Alignment.centerRight + Alignment(0, .3),
+                    alignment: Alignment.centerRight + Alignment(0, .5),
                     child: Text(
                       'Personal de Eventos',
                       style: TextStyle(

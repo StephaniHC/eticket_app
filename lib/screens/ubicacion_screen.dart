@@ -25,6 +25,14 @@ class UbicacionScreen extends StatefulWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Ubicaciones Disponibles"),
+        actions: [
+          IconButton(
+            icon: Icon( Icons.arrow_back), 
+            onPressed: (){ 
+              Navigator.pushReplacementNamed(context, 'home');
+            }
+          )
+        ],
       ),
       body: FutureBuilder(
         future: _getUbicacion(),
