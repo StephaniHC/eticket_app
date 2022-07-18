@@ -1,0 +1,25 @@
+import 'package:eticket_app/global/environment.dart';
+import 'package:eticket_app/models/evento_model.dart';
+import 'package:eticket_app/models/ubicacion_model.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
+
+class UbicacionService {
+  late Evento evento;
+  Future<List<Ubicacion>> getUbicacion() async {
+    List<Ubicacion> listaUbicacion = [];
+    final req = await http.get(Uri.parse('${Environment.apiUrl}/eventos-api-disponibles/${this.evento.id}'));
+    final resp = convert.jsonDecode(req.body);
+    listaUbicacion = resp
+        .map<Ubicacion>((u) => Ubicacion(
+            id: u["id"],
+            nombre: u["nombre"],
+            direccion: u["direccion"],
+            telefono: u["telefono"],
+            ))
+        .toList();
+    debugPrint(resp.toString());
+    return listaUbicacion;
+  }
+}
