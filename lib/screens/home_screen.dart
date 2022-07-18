@@ -79,15 +79,7 @@ class HomeScreen extends StatefulWidget {
               onTap: () { 
                 Navigator.pushReplacementNamed(context, 'qr');
               },
-            ),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: Text('Prueba'),
-              onTap: () {  
-                eventoService.getEventos(3);
-                print("salio");
-              },
-            ),
+            ), 
             ListTile(
               leading: const Icon(Icons.logout),
               title: Text('Salir'),
@@ -100,7 +92,7 @@ class HomeScreen extends StatefulWidget {
         ),
       ),
       body: FutureBuilder(
-        future: _getEventos(),
+        future: _getEventos(user.id),
         builder: (context, AsyncSnapshot<List<Evento>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -150,8 +142,8 @@ class HomeScreen extends StatefulWidget {
     _refreshController.refreshCompleted();
   }
 
-  Future<List<Evento>> _getEventos() async {
-    listaEvento = await eventoService.getEventos(3);
+  Future<List<Evento>> _getEventos(int idUser) async {
+    listaEvento = await eventoService.getEventos(idUser);
     return listaEvento;
   }
 }
