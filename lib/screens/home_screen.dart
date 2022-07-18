@@ -77,15 +77,7 @@ class HomeScreen extends StatefulWidget {
               onTap: () { 
                 Navigator.pushReplacementNamed(context, 'qr');
               },
-            ),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: Text('Prueba'),
-              onTap: () {  
-                eventoService.getEventos(user.id);
-                print("salio");
-              },
-            ),
+            ), 
             ListTile(
               leading: const Icon(Icons.logout),
               title: Text('Salir'),
@@ -149,8 +141,8 @@ class HomeScreen extends StatefulWidget {
     _refreshController.refreshCompleted();
   }
 
-  Future<List<Evento>> _getEventos(int user_id) async {
-    listaEvento = await eventoService.getEventos(user_id);
+  Future<List<Evento>> _getEventos(int idUser) async {
+    listaEvento = await eventoService.getEventos(idUser);
     return listaEvento;
   }
 }

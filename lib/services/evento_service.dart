@@ -10,7 +10,7 @@ class EventoService {
   Future<List<Evento>> getEventos(int idP) async {
     listaEventos = [];
     final req = await http
-        .get(Uri.parse('${Environment.apiUrl}/login-evento-disponible/4'));
+        .get(Uri.parse('${Environment.apiUrl}/login-evento-disponible/$idP'));
     final resp = convert.jsonDecode(req.body);
     final dataEvento = DataEvento.fromMap(resp);
     listaEventos = dataEvento.eventos!;
