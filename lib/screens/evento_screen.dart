@@ -27,14 +27,14 @@ class EventoScreen extends StatelessWidget {
                 evento.descripcion,
                 evento.estado
                 ),
-            /*ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => QrScannerScreen()),
-                  );
-                },
-                child: Text('QR Scanner'))*/
+            // ElevatedButton(
+            //     onPressed: () {
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(builder: (context) => QrScannerScreen()),
+            //       );
+            //     },
+            //     child: Text('QR Scanner'))
           ],
         ),
       ),

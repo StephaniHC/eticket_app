@@ -3,15 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
-import 'package:eticket_app/models/evento_model.dart';
-import 'package:eticket_app/models/user_model.dart';
+import 'package:eticket_app/models/models.dart';
 
 class EventoService {
   //late Users users;
+  List<Evento> listaEventos = [];
+
+  Future<List<Evento>> getEventos(int idP) async {
+    listaEventos = [];
+    final req = await http
+        .get(Uri.parse('${Environment.apiUrl}/login-evento-disponible/4'));
+    final resp = convert.jsonDecode(req.body);
+    final dataEvento = DataEvento.fromMap(resp);
+    listaEventos = dataEvento.eventos!;
+    return listaEventos;
+    /*
   Future<List<Evento>> getEventos(int idP) async {
     List<Evento> listaEvento = [];
     final req = await http.get(Uri.parse('${Environment.apiUrl}/login-evento-disponible/3'));
     final resp = convert.jsonDecode(req.body);
+    final DataEvento = 
     listaEvento = resp
         .map<Evento>((e) => Evento(
             id: e["id"],
@@ -22,5 +33,6 @@ class EventoService {
         .toList();
     debugPrint(resp.toString()); 
     return listaEvento;
+    */
   }
 }
