@@ -1,21 +1,34 @@
-
-import 'package:eticket_app/services/scanner_service.dart';
-import 'package:eticket_app/widgets/scan_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
-class QrScannerScreen extends StatelessWidget { 
+class QrScannerScreen extends StatefulWidget {
+  @override
+  QrScannerScreenState createState() {
+    return new QrScannerScreenState();
+  }
+}
+
+class QrScannerScreenState extends State<QrScannerScreen> {
   String result = "Ticket!";
 
   Future _scanQR() async {
-      String qrResult = await FlutterBarcodeScanner.scanBarcode('#3D8BEF', 'Cancelar', false, ScanMode.QR );
-       // result = ScannerService.getDatoQr(qrResult) as String;
-        result= qrResult; 
+    try {
+      String qrResult =  await FlutterBarcodeScanner.scanBarcode('#3D8BEF', 'Cancelar', false, ScanMode.QR );
+        
+      setState(() {
+        result = qrResult;
+      });
+    
+    } catch (ex) {
+      setState(() {
+        result = "Unknown Error $ex";
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         title: Text('Lectura de QR'), 
@@ -32,8 +45,5 @@ class QrScannerScreen extends StatelessWidget {
         onPressed: _scanQR,
       ),
     );
-    //return Scanner();
   }
 }
-
-

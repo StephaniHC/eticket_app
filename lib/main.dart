@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         routes: {
           'login': ( BuildContext context ) => LoginScreen(),
           'home': ( BuildContext context  ) => HomeScreen(),
-          'qr': ( BuildContext context  ) => QrScannerScreen(),
+          'qr': (BuildContext context) => QrScannerScreen(),
           //'evento': ( BuildContext context  ) => EventoScreen(),
           'ubicacion': ( BuildContext context  ) => UbicacionScreen(),
         }, 
