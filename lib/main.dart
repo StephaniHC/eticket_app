@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Etickes', 
-        initialRoute: 'login',
+        initialRoute: 'qr',
         routes: {
           'login': ( BuildContext context ) => LoginScreen(),
           'home': ( BuildContext context  ) => HomeScreen(),
