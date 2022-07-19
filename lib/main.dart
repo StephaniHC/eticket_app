@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Etickes', 
-        initialRoute: 'qr',
+        initialRoute: 'login',
         routes: {
           'login': ( BuildContext context ) => LoginScreen(),
           'home': ( BuildContext context  ) => HomeScreen(),

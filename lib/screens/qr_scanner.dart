@@ -18,7 +18,9 @@ class QrScannerScreen extends StatefulWidget {
 }
 
 class QrScannerScreenState extends State<QrScannerScreen> {
-  String result = "Ticket!";
+  String result = "Tickets!";
+  var service = ScannerService();
+  late Ticket datos;
 
   Future _scanQR() async {
     final scanService = Provider.of<ScannerService>(context, listen: false);
@@ -30,34 +32,60 @@ class QrScannerScreenState extends State<QrScannerScreen> {
         result = "Unknown Error $ex";
       });
     }
-      print('se supe que escaneo---------------');
+      result = qrResult;
       scanService.getDatoQr(qrResult);
-      print('se supe que salio---------------');
       // print(scanService.data.message);
-      setState(() {
+      setState(() {  
         result = qrResult;
       });
   }
 
   @override
   Widget build(BuildContext context) {
+    //service.ubicacion = ScannerService.ubicacion;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         title: Text('Lectura de QR'),
       ),
-      body: Center(
+      body: FutureBuilder(
+          future: _getDatoQr(),
+          builder: (context, AsyncSnapshot<Ticket> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              return _data();
+            }
+          },
+        ),
+      /*body: Center(
         child: Text(
           result,
           style: new TextStyle(
               fontSize: 15.0, fontWeight: FontWeight.bold, color: Colors.black),
         ),
-      ),
+      ),*/
       floatingActionButton: FloatingActionButton.extended(
         icon: Icon(Icons.qr_code_scanner),
         label: Text("Scanear Ticket!"),
         onPressed: _scanQR,
       ),
     );
+  }
+
+   Widget _data() {
+    return Container(
+      constraints: BoxConstraints.expand(
+        height: Theme.of(context).textTheme.headline4!.fontSize!,
+      ), 
+      child: Text('Datos del QR',
+        style: Theme.of(context).textTheme.headline4!
+            .copyWith(color: Color.fromARGB(255, 151, 146, 146))),
+    );
+  } 
+
+  Future<Ticket> _getDatoQr() async {
+    datos = await service.getDatoQr(result);
+    return datos;
   }
 }

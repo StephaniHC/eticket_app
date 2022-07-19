@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:eticket_app/global/environment.dart';
@@ -12,21 +13,20 @@ class ScannerService extends ChangeNotifier {
   late User user;
   late DataTicket data;
 
-  Future<List<Ticket>> getDatoQr(String qr) async {
-    List<Ticket> datos = [];
-    // int idUbicacion = this.ubicacion.id;
-    // print(idUbicacion);
+  Future<Ticket> getDatoQr(String qr) async {
+    Ticket datos; 
     final req = await http.get(
         Uri.parse('${Environment.apiUrl}/ubicaciones-corresponde/3/${qr}'));
-    print("ya scaneooooo");
-    print("--------------------------------");
-    print(req.body);
     final resp = convert.jsonDecode(req.body);
-    print(resp);
     data = DataTicket.fromMap(resp);
-    print(data.message);
-    print(data.ticket);
-    return [];
+    if (data.ticket == null){
+      datos = data.message as Ticket; //verificar 
+      return datos;
+    }else{
+      datos = data.ticket!;
+      print(datos);
+    }
+    return datos;
   }
 
   Future<String> verificarTicket() async {
