@@ -8,12 +8,12 @@ class DataTicket {
     DataTicket({
         this.message,
         this.success,
-        this.tickets,
+        this.ticket,
     });
 
     String? message;
     String? success;
-    List<Ticket>? tickets;
+    List<Ticket>? ticket;
 
     factory DataTicket.fromJson(String str) => DataTicket.fromMap(json.decode(str));
 
@@ -22,13 +22,13 @@ class DataTicket {
     factory DataTicket.fromMap(Map<String, dynamic> json) => DataTicket(
         message: json["message"],
         success: json["success"],
-        tickets: List<Ticket>.from(json["ticket"].map((x) => Ticket.fromMap(x))),
+        ticket: List<Ticket>.from(json["ticket"].map((x) => Ticket.fromMap(x))),
     );
 
     Map<String, dynamic> toMap() => {
         "message": message,
         "success": success,
-        "ticket": List<dynamic>.from(tickets!.map((x) => x.toMap())),
+        "ticket": List<dynamic>.from(ticket!.map((x) => x.toMap())),
     };
 }
 

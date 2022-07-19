@@ -1,5 +1,14 @@
+import 'dart:convert';
+
+import 'package:eticket_app/services/scanner_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+import 'package:eticket_app/global/environment.dart';
+import 'package:provider/provider.dart';
+
+import '../models/models.dart';
 
 class QrScannerScreen extends StatefulWidget {
   @override
@@ -10,15 +19,16 @@ class QrScannerScreen extends StatefulWidget {
 
 class QrScannerScreenState extends State<QrScannerScreen> {
   String result = "Ticket!";
+   
 
   Future _scanQR() async {
     try {
-      String qrResult =  await FlutterBarcodeScanner.scanBarcode('#3D8BEF', 'Cancelar', false, ScanMode.QR );
-        
+      String qrResult =  await FlutterBarcodeScanner.scanBarcode('#3D8BEF', 'Cancelar', false, ScanMode.QR );    
+      final scanService = Provider.of<ScannerService>(context, listen: false);  
+      scanService.getDatoQr(qrResult);
       setState(() {
         result = qrResult;
       });
-    
     } catch (ex) {
       setState(() {
         result = "Unknown Error $ex";
@@ -36,12 +46,12 @@ class QrScannerScreenState extends State<QrScannerScreen> {
       body: Center(
         child: Text(
          result,
-          style: new TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold, color: Colors.grey),
+          style: new TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold, color: Colors.black),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         icon: Icon(Icons.qr_code_scanner ),
-        label: Text("Scanea tu Ticket!"),
+        label: Text("Scanear Ticket!"),
         onPressed: _scanQR,
       ),
     );

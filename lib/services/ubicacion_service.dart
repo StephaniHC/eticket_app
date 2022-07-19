@@ -13,14 +13,6 @@ class UbicacionService extends ChangeNotifier {
     final req = await http.get(Uri.parse(
         '${Environment.apiUrl}/eventos-api-disponibles/${this.evento.id}'));
     final resp = convert.jsonDecode(req.body);
-    // listaUbicacion = resp
-    //     .map<Ubicacion>((u) => Ubicacion(
-    //         id: u["id"],
-    //         nombre: u["nombre"],
-    //         direccion: u["direccion"],
-    //         telefono: u["telefono"],
-    //         ))
-    //     .toList();
     data = DataUbicacion.fromMap(resp);
     if (data.ubicaciones == null) {
       return [];
