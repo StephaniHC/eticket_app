@@ -3,10 +3,10 @@ import 'package:eticket_app/screens/home_screen.dart';
 import 'package:eticket_app/screens/login_screen.dart';
 import 'package:eticket_app/screens/qr_scanner.dart';
 import 'package:eticket_app/screens/ubicacion_screen.dart';
-import 'package:eticket_app/services/auth_service.dart';
-import 'package:eticket_app/services/ubicacion_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'services/services.dart';
 
 void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
@@ -14,9 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        //ChangeNotifierProvider(create: (_) => new UiProvider() ),
         ChangeNotifierProvider(create: ( _ ) => AuthService() ),
         ChangeNotifierProvider(create: (context) => UbicacionService() ),
+        ChangeNotifierProvider(create: (context) => ScannerService() ),
       ],
 
       child: MaterialApp(
