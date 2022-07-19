@@ -19,38 +19,42 @@ class QrScannerScreen extends StatefulWidget {
 
 class QrScannerScreenState extends State<QrScannerScreen> {
   String result = "Ticket!";
-   
 
   Future _scanQR() async {
+    final scanService = Provider.of<ScannerService>(context, listen: false);
+      String qrResult = await FlutterBarcodeScanner.scanBarcode(
+          '#3D8BEF', 'Cancelar', false, ScanMode.QR);
     try {
-      String qrResult =  await FlutterBarcodeScanner.scanBarcode('#3D8BEF', 'Cancelar', false, ScanMode.QR );    
-      final scanService = Provider.of<ScannerService>(context, listen: false);  
-      scanService.getDatoQr(qrResult);
-      setState(() {
-        result = qrResult;
-      });
     } catch (ex) {
       setState(() {
         result = "Unknown Error $ex";
       });
     }
+      print('se supe que escaneo---------------');
+      scanService.getDatoQr(qrResult);
+      print('se supe que salio---------------');
+      // print(scanService.data.message);
+      setState(() {
+        result = qrResult;
+      });
   }
 
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text('Lectura de QR'), 
+        title: Text('Lectura de QR'),
       ),
       body: Center(
         child: Text(
-         result,
-          style: new TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold, color: Colors.black),
+          result,
+          style: new TextStyle(
+              fontSize: 15.0, fontWeight: FontWeight.bold, color: Colors.black),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        icon: Icon(Icons.qr_code_scanner ),
+        icon: Icon(Icons.qr_code_scanner),
         label: Text("Scanear Ticket!"),
         onPressed: _scanQR,
       ),
