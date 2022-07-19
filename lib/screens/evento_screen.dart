@@ -31,6 +31,7 @@ class EventoScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 ubicacionService.evento = this.evento;
+                print('hasta aqui todo bien');
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => UbicacionScreen()),

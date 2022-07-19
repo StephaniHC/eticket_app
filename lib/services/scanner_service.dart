@@ -12,17 +12,18 @@ class ScannerService extends ChangeNotifier {
   late Ticket ticket;
   late User user;
   late DataTicket data;
+  late bool isLoading;
 
   Future<Ticket> getDatoQr(String qr) async {
-    Ticket datos; 
-    final req = await http.get(
-        Uri.parse('${Environment.apiUrl}/ubicaciones-corresponde/3/${qr}'));
+    Ticket datos;
+    final req = await http
+        .get(Uri.parse('${Environment.apiUrl}/ubicaciones-corresponde//${qr}'));
     final resp = convert.jsonDecode(req.body);
     data = DataTicket.fromMap(resp);
-    if (data.ticket == null){
-      datos = data.message as Ticket; //verificar 
+    if (data.ticket == null) {
+      datos = data.message as Ticket; //verificar
       return datos;
-    }else{
+    } else {
       datos = data.ticket!;
       print(datos);
     }
@@ -38,6 +39,40 @@ class ScannerService extends ChangeNotifier {
         Uri.parse('${Environment.apiUrl}/tickets-api-validar'),
         body: data);
     final Map<String, dynamic> respuesta = json.decode(resp.body);
+    return respuesta['message'];
+  }
+
+  void getDatoQr1(String qr, int IdUbicacion) async {
+    isLoading = true;
+    notifyListeners();
+    final req = await http.get(Uri.parse(
+        '${Environment.apiUrl}/ubicaciones-corresponde/$IdUbicacion/$qr'));
+    
+    print('getDatoQr1------------------------------------');
+    print('qr: $qr');
+    print('ubicacion: $IdUbicacion');
+    print(req.body);
+    print('endgetDatoQr1------------------------------------');
+    final resp = convert.jsonDecode(req.body);
+    data = DataTicket.fromMap(resp);
+    ticket = data.ticket!;
+    print(data);
+    print('todo nise--------------------');
+    isLoading = false;
+    notifyListeners();
+  }
+
+  Future<String?> registrarTicket(int idUser, int idUbicacion) async {
+    final Map<String, String> data = {
+      'user_id': '$idUser',
+      'ticket_id': '$idUbicacion',
+    };
+    final resp = await http.post(
+        Uri.parse('${Environment.apiUrl}/tickets-api-validar'),
+        body: data);
+    print(resp.body);
+    final respuesta = json.decode(resp.body);
+    print(respuesta);
     return respuesta['message'];
   }
 }
